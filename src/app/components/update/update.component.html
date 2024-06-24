@@ -1,0 +1,41 @@
+<fieldset>
+    <legend>Update d'un fan</legend>
+    <form [formGroup]="updateForm" (ngSubmit)="onSubmit()">
+        <div>
+            <label for="nom">Nom du fan</label>
+            <input type="text" id="nom" formControlName="nom">
+        </div>
+        @if (updateForm.controls['nom'].invalid && updateForm.controls['nom'].touched) {
+        <p>La saisie du nom est obligatoire !</p>
+        }
+        <div>
+            <label for="dateNaissance">Date de naissance :</label>
+            <input type="date" id="dateNaissance" formControlName="dateNaissance">
+        </div>
+        @if (updateForm.controls['dateNaissance'].invalid && updateForm.controls['dateNaissance'].touched) {
+        <p>{{updateForm.controls['dateNaissance'].getError('ageMinimumError')}}</p>
+        }
+
+        <fieldset>
+            <legend>Série préférées
+                <button type="button" (click)="ajout()">Ajouter</button>
+            </legend>
+            <div formArrayName="serieFavoris">
+                @if (getSerieFavorisArray().length > 0) {
+                @for (serie of getSerieFavorisArray().controls;track $index) {
+                <div>
+                    <p></p>
+                    <label> Série {{$index + 1}}</label>
+                    <input type="text" formControlName="{{$index}}">
+                    <button type="button" (click)="delete($index)">Supprimer</button>
+                </div>
+                }
+                }
+                @else{
+                <p>Aucune séries ajoutée actuellement 😥</p>
+                }
+            </div>
+        </fieldset>
+        <button type="submit" [disabled]="updateForm.invalid">Mettre à jour</button>
+    </form>
+</fieldset>

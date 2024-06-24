@@ -1,0 +1,45 @@
+<fieldset>
+    <legend>Ajout d'un fan</legend>
+    <form [formGroup]="createForm" (ngSubmit)="onSubmit()">
+        <div>
+            <label for="nom">Nom du fan</label>
+            <input type="text" id="nom" formControlName="nom">
+        </div>
+        @if (createForm.controls['nom'].invalid && createForm.controls['nom'].touched) {
+        <p>La saisie du nom est obligatoire !</p>
+        }
+        <div>
+            <label for="dateNaissance">Date de naissance :</label>
+            <input type="date" id="dateNaissance" formControlName="dateNaissance">
+        </div>
+        @if (createForm.controls['dateNaissance'].invalid && createForm.controls['dateNaissance'].touched) {
+        <p>{{createForm.controls['dateNaissance'].getError('ageMinimumError')}}</p>
+        }
+
+        <fieldset>
+            <legend>Série préférées
+                <button type="button" (click)="ajout()">Ajouter</button>
+            </legend>
+            <div formArrayName="serieFavoris">
+                @if (getSerieFavorisArray().length > 0) {
+                @for (serie of getSerieFavorisArray().controls;track $index) {
+                <div>
+                    <p></p>
+                    <label> Série {{$index + 1}}</label>
+                    <input type="text" formControlName="{{$index}}">
+                    <button type="button" (click)="delete($index)">Supprimer</button>
+                    <!-- @if (createForm.controls['serieFavoris'[$index]] && createForm.controls['serieFavoris'[$index]].touched) {
+                        <p>{{createForm.controls['dateNaissance'].getError('ageMinimumError')}}</p>
+                    } -->
+
+                </div>
+                }
+                }
+                @else{
+                <p>Aucune séries ajoutée actuellement 😥</p>
+                }
+            </div>
+        </fieldset>
+        <button type="submit" [disabled]="createForm.invalid">Ajouter</button>
+    </form>
+</fieldset>

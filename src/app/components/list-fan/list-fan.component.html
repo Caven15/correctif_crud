@@ -1,0 +1,9 @@
+<fieldset>
+  <legend>Liste de fans</legend>
+  @for (fan of listeFan; track $index) {
+    <div>{{fan.nom}}</div>
+    <button (click)="afficherDetail($index)">Détails</button>
+    <button (click)="afficherUpdate($index)">Update</button>
+    <button (click)="supprimerFan($index)">Suppression</button>
+  }
+</fieldset>

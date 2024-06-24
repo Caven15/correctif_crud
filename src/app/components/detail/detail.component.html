@@ -1,0 +1,11 @@
+<fieldset>
+    <legend>Détail fan : {{fan.nom}}</legend>
+    <p>Date de naissance : {{fan.dateNaissance | date : 'dd/MM/yy'}}</p>
+
+    <fieldset>
+        <legend>Série(s)</legend>
+        @for (serie of fan.serieFavoris; track $index) {
+        <p>{{$index+1}} : {{serie}}</p>
+        }
+    </fieldset>
+</fieldset>
